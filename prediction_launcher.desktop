@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment[en_GB]=
+Comment=
+Exec='/home/seanrh/Documents/Work/Personal code/Predict lifts/Predict_app/App/prediction_app.py'
+GenericName[en_GB]=
+GenericName=
+Icon=/home/seanrh/Documents/Work/Personal code/Predict lifts/Predict_app/App/squat.png
+MimeType=
+Name=Powerlifting predictions
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+Version=1.0
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
