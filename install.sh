@@ -26,7 +26,7 @@ sudo wget -O Deadlift_Model_2.sav https://raw.githubusercontent.com/SerRichard/P
 sudo wget -O Deadlift_Model_3.sav https://raw.githubusercontent.com/SerRichard/Prediction_app/master/Squat_Model_3.sav
 
 sudo pip3 install -r requirements.txt
-sudo chmod x+ prediction_app.py
+sudo chmod +x prediction_app.py
 
 cd /
 cd ~/Desktop
