@@ -1,7 +1,11 @@
+#!/usr/bin/env bash
 cd /
 cd /usr/lib64
 mkdir prediction_app
 cd prediction_app
+
+SRC_DIR="$ROOT/usr/lib64/prediction_app"
+DST_DIR="$HOME/Desktop"
 
 sudo wget -O requirements.txt https://raw.githubusercontent.com/SerRichard/Prediction_app/master/requirements.txt
 sudo wget -O prediction_app.py https://raw.githubusercontent.com/SerRichard/Prediction_app/master/prediction_app.py
@@ -25,10 +29,10 @@ sudo wget -O Deadlift_Model_1.sav https://raw.githubusercontent.com/SerRichard/P
 sudo wget -O Deadlift_Model_2.sav https://raw.githubusercontent.com/SerRichard/Prediction_app/master/Squat_Model_2.sav
 sudo wget -O Deadlift_Model_3.sav https://raw.githubusercontent.com/SerRichard/Prediction_app/master/Squat_Model_3.sav
 
+sudo wget -O prediction_launcher.desktop https://raw.githubusercontent.com/SerRichard/Prediction_app/master/prediction_launcher.desktop
+
+FILE="prediction_launcher.desktop"
+
+cp "$SRC_DIR/$FILE" "$DST_DIR"
 sudo pip3 install -r requirements.txt
 sudo chmod +x prediction_app.py
-
-cd /
-cd ~/Desktop
-
-sudo wget -O prediction_launcher.desktop https://raw.githubusercontent.com/SerRichard/Prediction_app/master/prediction_launcher.desktop
