@@ -1,4 +1,4 @@
-**Prediction App**
+#Prediction App
 
 App using ML regression to predict your lifts.
 
