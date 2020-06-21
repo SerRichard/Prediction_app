@@ -44,7 +44,7 @@ App is basic and easy to use.
 - Select your history.
  *Lifter's history is either a recent WILKS or McCulloch score. However, in absence of those the lifter can use their most recent max lifts to make a prediction.
 
-- Next
+Next
 - You will be prompted to input age and weight. *Weight input is in kilograms.
 - You will either need to now input you recent score, or the recent lifts necessary.
 - Predict.
