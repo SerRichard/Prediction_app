@@ -38,17 +38,17 @@ The icon image may not appear on all distributions, so you may need to set it ma
 **App use**
 
 App is basic and easy to use.
-> Select the lift you wish to predict.
-> Select any equipment used.
-> Select your sex.
-> Select your history.
+- Select the lift you wish to predict.
+- Select any equipment used.
+- Select your sex.
+- Select your history.
  *Lifter's history is either a recent WILKS or McCulloch score. However, in absence of those the lifter can use their most recent max lifts to make a prediction.
 
-> Next
-> You will be prompted to input age and weight. *Weight input is in kilograms.
-> You will either need to now input you recent score, or the recent lifts necessary.
-> Predict.
-> Prediction results displayed below. Reset to carry out another prediction.
+- Next
+- You will be prompted to input age and weight. *Weight input is in kilograms.
+- You will either need to now input you recent score, or the recent lifts necessary.
+- Predict.
+- Prediction results displayed below. Reset to carry out another prediction.
 
 **App notes**
 
