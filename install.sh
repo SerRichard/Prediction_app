@@ -5,6 +5,7 @@ mkdir prediction_app
 cd prediction_app
 
 SRC_DIR="$ROOT/usr/lib64/prediction_app"
+
 DST_DIR="$HOME/Desktop"
 
 sudo wget -O requirements.txt https://raw.githubusercontent.com/SerRichard/Prediction_app/master/requirements.txt
@@ -33,6 +34,9 @@ sudo wget -O prediction_launcher.desktop https://raw.githubusercontent.com/SerRi
 
 FILE="prediction_launcher.desktop"
 
-cp "$SRC_DIR/$FILE" "$DST_DIR"
+echo "$SRC_DIR/$FILE"
+echo "$DST_DIR"
+
+sudo cp "$FILE" "$DST_DIR"
 sudo pip3 install -r requirements.txt
 sudo chmod +x prediction_app.py
