@@ -3,10 +3,11 @@
 # -- code --
 # @author Sean Hoyal
 #
-#
-#
-#
-
+# An app that will take set inputs about a Athlete and then make a prediction
+# about that athlete abilities on a chosen lift. Uses RFregression models
+# based on a previous project to do this.
+# 
+# Imports
 from PyQt5.QtWidgets import QPushButton, QMainWindow, QVBoxLayout, QApplication, QPushButton, QHBoxLayout
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtGui import QIcon
@@ -15,6 +16,8 @@ from sklearn.ensemble import RandomForestRegressor
 import pickle
 import sys
 
+# Athlete is the object parsed through the various pages and functions. It represents the 
+# individual the app is predicting for.
 class athlete(object):
 	
 	def __init__(self):
@@ -31,14 +34,20 @@ class athlete(object):
 		self.lift2 = None
 		self.result = None
 
+# The first page of the app. A basic layout attributes that can be filled with clicking a button.
+# Directories used in the code are built by the installation file.
+#
+# The UIHome and UISecond classes are responsible for the app layout, not the functionality.
 class UIHome(object):
 	def setupUI(self, MainWindow):
-		MainWindow.setWindowIcon(QtGui.QIcon("/home/seanrh/Documents/Work/Personal code/Predict lifts/Predict_app/App/squat.png"))
+		MainWindow.setWindowIcon(QtGui.QIcon("/usr/lib64/prediction_app/squat.png"))
 		MainWindow.setGeometry(300, 300, 500, 500)
 		MainWindow.setFixedSize(500, 500)
 		MainWindow.setWindowTitle("prediction_app")
 		
-		# Base layer
+		# Base layer, 'layout' is placed on top of the base.
+		# Buttons are affixed to their own labels which are
+		# then added to 'layout'.
 		self.centralwidget = QtWidgets.QWidget(MainWindow)
 		self.centralwidget.setStyleSheet("background-color: white")
 
@@ -47,13 +56,13 @@ class UIHome(object):
 		
 		self.layout1 = QVBoxLayout()
 
-		# Lift buttons
+		# Lift buttons.
 		self.btn_lbl = QtWidgets.QLabel(self.centralwidget)
 		self.btn_lyt = QHBoxLayout()
 		
 		self.btn_sqt = QtWidgets.QPushButton(self.btn_lbl)
 		self.btn_sqt.setObjectName('squat')
-		self.btn_sqt.setIcon(QIcon('/home/seanrh/Documents/Work/Personal code/Predict lifts/Predict_app/App/squat.png'))
+		self.btn_sqt.setIcon(QIcon('/usr/lib64/prediction_app/squat.png'))
 		self.btn_sqt.setIconSize(QtCore.QSize(90, 90))
 		self.btn_sqt.setFixedSize(120, 77)
 		self.btn_sqt.setStyleSheet("background-color: darkGray")
@@ -61,7 +70,7 @@ class UIHome(object):
 
 		self.btn_bench = QtWidgets.QPushButton(self.btn_lbl)
 		self.btn_bench.setObjectName('bench')
-		self.btn_bench.setIcon(QIcon('/home/seanrh/Documents/Work/Personal code/Predict lifts/Predict_app/App/bench.png'))
+		self.btn_bench.setIcon(QIcon('/usr/lib64/prediction_app/bench.png'))
 		self.btn_bench.setIconSize(QtCore.QSize(90, 90))
 		self.btn_bench.setFixedSize(120, 77)
 		self.btn_bench.setStyleSheet("background-color: darkGray")
@@ -69,7 +78,7 @@ class UIHome(object):
 
 		self.btn_dead = QtWidgets.QPushButton(self.btn_lbl)
 		self.btn_dead.setObjectName('deadlift')
-		self.btn_dead.setIcon(QIcon('/home/seanrh/Documents/Work/Personal code/Predict lifts/Predict_app/App/deadlift.png'))
+		self.btn_dead.setIcon(QIcon('/usr/lib64/prediction_app/deadlift.png'))
 		self.btn_dead.setIconSize(QtCore.QSize(80, 80))
 		self.btn_dead.setFixedSize(120, 77)
 		self.btn_dead.setStyleSheet("background-color: darkGray")
@@ -78,7 +87,7 @@ class UIHome(object):
 		self.btn_lbl.setLayout(self.btn_lyt)
 		self.layout1.addWidget(self.btn_lbl)
 
-		# Labels and buttons for equipment --
+		# Labels and buttons for equipment.
 		self.equipment_lbl = QtWidgets.QLabel(self.centralwidget)
 		self.equipment_layout = QHBoxLayout()
 
@@ -110,13 +119,13 @@ class UIHome(object):
 		self.equipment_lbl.setLayout(self.equipment_layout)
 		self.layout1.addWidget(self.equipment_lbl)
 
-		# Labels and buttons related to Sex --
+		# Labels and buttons related to Sex.
 		self.sex_lbl = QtWidgets.QLabel(self.centralwidget)
 		self.sex_layout = QHBoxLayout()
 		
 		self.btn_male = QtWidgets.QPushButton(self.sex_lbl)
 		self.btn_male.setObjectName('male')
-		self.btn_male.setIcon(QIcon('/home/seanrh/Documents/Work/Personal code/Predict lifts/Predict_app/App/male.png'))
+		self.btn_male.setIcon(QIcon('/usr/lib64/prediction_app/male.png'))
 		self.btn_male.setIconSize(QtCore.QSize(40, 40))
 		self.btn_male.setFixedSize(120, 77)
 		self.btn_male.setStyleSheet("background-color: darkGray")
@@ -124,7 +133,7 @@ class UIHome(object):
 		
 		self.btn_fmale = QtWidgets.QPushButton(self.sex_lbl)
 		self.btn_fmale.setObjectName('female')
-		self.btn_fmale.setIcon(QIcon('/home/seanrh/Documents/Work/Personal code/Predict lifts/Predict_app/App/female.png'))
+		self.btn_fmale.setIcon(QIcon('/usr/lib64/prediction_app/female.png'))
 		self.btn_fmale.setFixedSize(120, 77)
 		self.btn_fmale.setIconSize(QtCore.QSize(50, 50))
 		self.btn_fmale.setStyleSheet("background-color: darkGray")
@@ -132,7 +141,7 @@ class UIHome(object):
 		
 		self.btn_trans = QtWidgets.QPushButton(self.sex_lbl)
 		self.btn_trans.setObjectName('trans')
-		self.btn_trans.setIcon(QIcon('/home/seanrh/Documents/Work/Personal code/Predict lifts/Predict_app/App/trans.png'))
+		self.btn_trans.setIcon(QIcon('/usr/lib64/prediction_app/trans.png'))
 		self.btn_trans.setFixedSize(120, 77)
 		self.btn_trans.setIconSize(QtCore.QSize(60, 60))
 		self.btn_trans.setStyleSheet("background-color: darkGray")
@@ -141,7 +150,10 @@ class UIHome(object):
 		self.sex_lbl.setLayout(self.sex_layout)
 		self.layout1.addWidget(self.sex_lbl)
 
-		# Labels and buttons related to strength --
+		# Labels and buttons related to history. History
+		# buttons are related to whether the user has a previous
+		# Wilks, McCulloch, or recent lifts to provide to the 
+		# prediction model.
 		self.sth_lbl = QtWidgets.QLabel(self.centralwidget)
 		self.sth_layout = QHBoxLayout()
 
@@ -164,7 +176,8 @@ class UIHome(object):
 		self.layout1.addWidget(self.sth_lbl)
 
 
-		# Label and button for next
+		# Label and button for next. Next button goes to the second page
+		# of the app.
 		self.lbl_next = QtWidgets.QLabel(self.centralwidget)
 		self.lyt_next = QVBoxLayout()
 
@@ -180,23 +193,32 @@ class UIHome(object):
 		self.details.setLayout(self.layout1)
 		MainWindow.setCentralWidget(self.centralwidget)
 
-
+# Second page of the app. One of either two pages will be built,
+# depending on what historical information about the athletes lifts
+# are available.
 class UISecond(object):
 	def setupUI(self, MainWindow, athlete):
 		MainWindow.setFixedSize(500, 500)
 		MainWindow.setWindowTitle("prediction_app")
 
+		# If the athlete can provide either a recent Wilks or McCulloch, then everything
+		# within this if statement will be built. Else, see line 277.
 		if (athlete.history == 'Wilks') or (athlete.history == 'McCulloch'):
 			
-			# Base layer
+			# Base layer, 'layout' is placed on top of the base.
+			# Buttons are affixed to their own labels which are
+			# then added to 'layout'.
 			self.centralwidget = QtWidgets.QWidget(MainWindow)
+			self.centralwidget.setStyleSheet("background-color: white")
 
 			self.base = QtWidgets.QLabel(self.centralwidget)
 			self.base.setGeometry(30, 50, 400, 400)
 
 			self.layout = QVBoxLayout()
 
-			# Labels and buttons for age and weight
+			# Labels and buttons for age and weight. Two text boxes for the user
+			# to input both the athletes age and weight(kg). An enter button set to the right
+			# to input info from both of these boxes.
 			self.age_label = QtWidgets.QLabel(self.centralwidget)
 			self.lbl_age = QtWidgets.QLabel("Age: ", self.age_label)
 			self.txt_age = QtWidgets.QLineEdit(self.age_label)
@@ -218,7 +240,8 @@ class UISecond(object):
 
 			self.layout.addWidget(self.age_label)
 
-			# Wilks or McCulloch score
+			# Wilks or McCulloch score. An input box again with a button for entry
+			# set to the right hand side.
 			self.score_lbl = QtWidgets.QLabel(self.centralwidget)
 			self.score_layout = QHBoxLayout()
 
@@ -234,7 +257,9 @@ class UISecond(object):
 			self.score_lbl.setLayout(self.score_layout)
 			self.layout.addWidget(self.score_lbl)
 
-			# Prediction and Reset
+			# Prediction and Reset buttons. Prediction button will display the 
+			# prediction result in the results section. Reset button will
+			# return to the first page, and reset athlete variables.
 			self.pred_lbl = QtWidgets.QLabel(self.centralwidget)
 
 			self.pred_lay = QHBoxLayout()
@@ -249,7 +274,8 @@ class UISecond(object):
 			self.pred_lbl.setLayout(self.pred_lay)
 			self.layout.addWidget(self.pred_lbl)
 			
-			# Results section
+			# Results section, this is a txt field that will display the 
+			# prediction output.
 			self.res_label = QtWidgets.QLabel(self.centralwidget)
 			self.res_txt = QtWidgets.QPlainTextEdit(self.res_label)
 			self.res_txt.setFixedSize(386, 50)
@@ -257,9 +283,12 @@ class UISecond(object):
 			
 			self.layout.addWidget(self.res_label)
 
+		# Else.
 		else:
 
-			# Base layer
+			# Base layer, 'layout' is placed on top of the base.
+			# Buttons are affixed to their own labels which are
+			# then added to 'layout'.
 			self.centralwidget = QtWidgets.QWidget(MainWindow)
 			self.centralwidget.setStyleSheet("background-color: white")
 
@@ -268,7 +297,9 @@ class UISecond(object):
 
 			self.layout = QVBoxLayout()
 
-			# Labels and buttons for age and weight
+			# Labels and buttons for age and weight. Two text boxes for the user
+			# to input both the athletes age and weight(kg). An enter button set to the right
+			# to input info from both of these boxes.
 			self.age_label = QtWidgets.QLabel(self.centralwidget)
 			self.lbl_age = QtWidgets.QLabel("Age: ", self.age_label)
 			self.txt_age = QtWidgets.QLineEdit(self.age_label)
@@ -290,7 +321,9 @@ class UISecond(object):
 
 			self.layout.addWidget(self.age_label)
 
-			# First previous lift
+			# First previous lift, an input box with an enter button set to the right.
+			# The lift required for input will change depending on what lift you are
+			# trying to predict.
 			self.first_lbl = QtWidgets.QLabel(self.centralwidget)
 			self.first_layout = QHBoxLayout()
 
@@ -306,7 +339,9 @@ class UISecond(object):
 			self.first_lbl.setLayout(self.first_layout)			
 			self.layout.addWidget(self.first_lbl)
 
-			# Second previous lift
+			# Second previous lift, another input box with an enter button set to the right.
+			# The lift required for input will change depending on what lift you are
+			# trying to predict.
 			self.second_lbl = QtWidgets.QLabel(self.centralwidget)
 			self.second_layout = QHBoxLayout()
 
@@ -322,7 +357,9 @@ class UISecond(object):
 			self.second_lbl.setLayout(self.second_layout)			
 			self.layout.addWidget(self.second_lbl)
 
-			# Prediction and Reset
+			# Prediction and Reset buttons. Prediction button will display the 
+			# prediction result in the results section. Reset button will
+			# return to the first page, and reset athlete variables.
 			self.pred_lbl = QtWidgets.QLabel(self.centralwidget)
 
 			self.pred_lay = QHBoxLayout()
@@ -337,7 +374,8 @@ class UISecond(object):
 			self.pred_lbl.setLayout(self.pred_lay)
 			self.layout.addWidget(self.pred_lbl)
 			
-			# Results section
+			# Results section, this is a txt field that will display the 
+			# prediction output.
 			self.res_label = QtWidgets.QLabel(self.centralwidget)
 			self.res_txt = QtWidgets.QPlainTextEdit(self.res_label)
 			self.res_txt.setFixedSize(386, 50)
@@ -345,11 +383,16 @@ class UISecond(object):
 			
 			self.layout.addWidget(self.res_label)
 
-		# Attach to base
+		# Attach to base. Whichever page is built will get attached 
+		# to the base layer of the second page.
 		self.base.setLayout(self.layout)
 		MainWindow.setCentralWidget(self.centralwidget)
 
+# Class main window, this is where the user interface and special button functions have
+# been programmed.
 class MainWindow(QMainWindow):
+
+	# Initiate objects needed for app.
 	def __init__(self):
 		super(MainWindow, self).__init__()
 		self.athlete = athlete()
@@ -357,6 +400,7 @@ class MainWindow(QMainWindow):
 		self.uiSecond = UISecond()
 		self.startUIHome()
 
+	# Runs at start up. Programmes all of the buttons on the uiHome.
 	def startUIHome(self):
 		self.uiHome.setupUI(self)
 		self.uiHome.btn_sqt.clicked.connect(self.lft_clk)
@@ -380,6 +424,7 @@ class MainWindow(QMainWindow):
 		self.uiHome.btn_next.clicked.connect(self.startUISecond)
 		self.show()
 
+	# Runs all the buttons required for whichever uiSecond page was built.
 	def startUISecond(self):
 		self.uiSecond.setupUI(self, self.athlete)
 
@@ -397,6 +442,7 @@ class MainWindow(QMainWindow):
 		self.uiSecond.res_btn.clicked.connect(self.startUIHome)
 		self.show()
 
+	# Function for setting the correct lift and checks for each athlete.
 	def lft_clk(self):
 		sender = self.sender()
 		if sender.objectName() == 'squat':
@@ -420,6 +466,7 @@ class MainWindow(QMainWindow):
 			print(self.athlete.lift)
 			return(self.athlete.lift, self.athlete.check1, self.athlete.check2)
 
+	# Function for setting the sex of the athlete.
 	def sex_clk(self):
 		sender = self.sender()
 		if sender.objectName() == 'male':
@@ -437,6 +484,7 @@ class MainWindow(QMainWindow):
 			print(self.athlete.sex)
 			return(self.athlete.sex)
 	
+	# Function for setting the equipment of an athlete.
 	def equ_clk(self):
 		sender = self.sender()
 		if sender.text() == 'Raw':
@@ -464,6 +512,7 @@ class MainWindow(QMainWindow):
 			print(self.athlete.equipment)
 			return(self.athlete.equipment)
 
+	# Function for setting the history of an athlete.
 	def hst_clk(self):
 		sender = self.sender()
 		if sender.text() == 'Wilks':
@@ -481,6 +530,7 @@ class MainWindow(QMainWindow):
 			print(self.athlete.history)
 			return(self.athlete.history)
 
+	# Function for the buttons in startUISecond.
 	def btn_clk(self):
 		sender = self.sender()
 		if sender.text() == "Enter":
@@ -504,7 +554,10 @@ class MainWindow(QMainWindow):
 		if sender.text() == "Predict!":
 			self.athlete.result = self.makePrediction()
 			self.uiSecond.res_txt.setPlainText(self.athlete.result)
-			
+
+	# Function for taking all of the relevant information about the athlete
+	# and parse it to the correct regression model. Take the result, and return
+	# the result.	
 	def makePrediction(self):
 	
 		y = [self.athlete.sex, self.athlete.age, self.athlete.weight, self.athlete.equipment]
@@ -520,7 +573,7 @@ class MainWindow(QMainWindow):
 			y.append(self.athlete.lift1)
 			y.append(self.athlete.lift2)
 
-		model = pickle.load(open('/home/seanrh/Documents/Work/Personal code/Predict lifts/Predict_app/App/{}_Model_{}.sav'.format(self.athlete.lift, tier), 'rb'))
+		model = pickle.load(open('/usr/lib64/prediction_app/{}_Model_{}.sav'.format(self.athlete.lift, tier), 'rb'))
 
 		result = str(model.predict([y]))
 		result = result.replace("[", "")
@@ -529,6 +582,7 @@ class MainWindow(QMainWindow):
 		print(result)
 		return(result)
 
+# Start the home window, this is the 'main' for the programme.
 def home_window():
 	app = QApplication(sys.argv)
 	win = MainWindow()
